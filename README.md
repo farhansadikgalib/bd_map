@@ -10,24 +10,9 @@ Interactive Bangladesh maps for Flutter. One widget gives you a tappable map tha
 
 ## Screenshots
 
-| Divisions | Districts | Upazilas / Thanas |
-| :---: | :---: | :---: |
-| ![Divisions](screenshots/01-drilldown-divisions.png) | ![Districts](screenshots/02-drilldown-districts.png) | ![Upazilas](screenshots/03-drilldown-upazilas.png) |
-
-| Info panel | বাংলা mode | Classic map |
-| :---: | :---: | :---: |
-| ![Info panel](screenshots/04-info-panel.png) | ![Bangla mode](screenshots/05-bangla-mode.png) | ![Classic map](screenshots/06-classic-map.png) |
-
-## Features
-
-| Feature | Widget or class | What you get |
-| --- | --- | --- |
-| Drill-down map | `BdMap` | Tap a division to see its districts, then upazilas, then unions. Breadcrumb, back button, animated zoom. |
-| Wall maps | `BdCountryMap` | The whole country at one level: 8 divisions, 64 districts, 500+ upazilas or 5,100+ unions. Pinch to zoom, tap to select. |
-| Your data | `BdMapData` | Load values from a JSON file, an API response or a Dart map. Shows in the info panel, a ranked list and, optionally, as choropleth colors. |
-| Geography API | `BdGeo` | Every region with English and Bangla names, parent and children lookups, and boundary geometry. |
-| Classic map | `BangladeshMap` | The original division map with per-division colors, tooltips and tap callbacks. |
-| Pure Dart | | No assets, no plugins, no network. Everything is compiled into the package. |
+| Divisions | Districts | Upazilas | Unions |
+| :---: | :---: | :---: | :---: |
+| ![Divisions](screenshots/01-drilldown-divisions.png) | ![Districts](screenshots/02-drilldown-districts.png) | ![Upazilas](screenshots/03-drilldown-upazilas.png) | ![Unions](screenshots/04-drilldown-unions.png) |
 
 ## Installation
 
@@ -51,7 +36,22 @@ BdCountryMap(BdArea.district)   // whole country at one level
 Bangladesh()                    // classic division map
 ```
 
+| `BdMap` | `BdCountryMap` | `Bangladesh` |
+| :---: | :---: | :---: |
+| ![BdMap](screenshots/map-drilldown.png) | ![BdCountryMap](screenshots/map-country.png) | ![Bangladesh](screenshots/map-classic.png) |
+
 Switch labels, breadcrumb and panel text to Bangla with `useBanglaNames: true`.
+
+### Features
+
+| Feature | Widget or class | What you get |
+| --- | --- | --- |
+| Drill-down map | `BdMap` | Tap a division to see its districts, then upazilas, then unions. Breadcrumb, back button, animated zoom. |
+| Wall maps | `BdCountryMap` | The whole country at one level: 8 divisions, 64 districts, 500+ upazilas or 5,100+ unions. Pinch to zoom, tap to select. |
+| Your data | `BdMapData` | Load values from a JSON file, an API response or a Dart map. Shows in the info panel, a ranked list and, optionally, as choropleth colors. |
+| Geography API | `BdGeo` | Every region with English and Bangla names, parent and children lookups, and boundary geometry. |
+| Classic map | `BangladeshMap` | The original division map with per-division colors, tooltips and tap callbacks. |
+| Pure Dart | | No assets, no plugins, no network. Everything is compiled into the package. |
 
 ### 2. Handle taps
 
