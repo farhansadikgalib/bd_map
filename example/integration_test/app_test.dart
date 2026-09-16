@@ -119,29 +119,24 @@ void main() {
     });
   });
 
-  testWidgets('full drill-down journey with screenshots', (tester) async {
+  testWidgets('full drill-down journey', (tester) async {
     app.main();
-    await settle(tester);
-    await binding.convertFlutterSurfaceToImage();
     await settle(tester);
 
     // --- Country level: all 8 divisions visible, breadcrumb shows root.
     expect(find.byType(BdMap), findsOneWidget);
     expect(find.text('Bangladesh'), findsWidgets);
-    await binding.takeScreenshot('01-drilldown-divisions');
 
     // --- Tap Dhaka division -> drills into its districts.
     final dhakaDivision = BdGeo.divisionByName('Dhaka')!;
     await tapRegion(tester, dhakaDivision);
     expect(find.text('Dhaka'), findsWidgets,
         reason: 'breadcrumb should now contain Dhaka');
-    await binding.takeScreenshot('02-drilldown-districts');
 
     // --- Tap Gazipur district -> drills into its upazilas.
     final gazipur = BdGeo.districtByName('Gazipur')!;
     await tapRegion(tester, gazipur, zoomedInto: dhakaDivision);
     expect(find.text('Gazipur'), findsWidgets);
-    await binding.takeScreenshot('03-drilldown-upazilas');
 
     // --- Tap an upazila -> drills into its union map.
     final upazilas = BdGeo.childrenOf(gazipur);
@@ -156,7 +151,6 @@ void main() {
     await tapRegion(tester, unions.first, zoomedInto: kaliakair);
     expect(find.text('Union / Ward'), findsOneWidget,
         reason: 'info panel should show the level chip for the selection');
-    await binding.takeScreenshot('04-info-panel');
 
     // --- Breadcrumb "Bangladesh" pops all the way back to country level.
     await tester.tap(find.descendant(
@@ -170,7 +164,6 @@ void main() {
     await tester.tap(find.text('বাংলা'));
     await settle(tester);
     expect(find.text('বাংলাদেশ'), findsWidgets);
-    await binding.takeScreenshot('05-bangla-mode');
     await tester.tap(find.text('EN'));
     await settle(tester);
 
@@ -178,7 +171,89 @@ void main() {
     await tester.tap(find.text('Classic'));
     await settle(tester);
     expect(find.byType(Bangladesh), findsOneWidget);
-    await binding.takeScreenshot('06-classic-map');
+
+    // --- Atlas page: whole country at district level; tap a district to
+    // open its info panel. The canvas has the world aspect ratio, so a
+    // label point maps to the canvas by proportion.
+    await tester.tap(find.text('Atlas'));
+    await settle(tester);
+    expect(find.byType(BdCountryMap), findsOneWidget);
+    final atlasPaint = find
+        .descendant(
+          of: find.descendant(
+            of: find.byType(BdCountryMap),
+            matching: find.byType(AspectRatio),
+          ),
+          matching: find.byType(CustomPaint),
+        )
+        .first;
+    final atlasRect = tester.getRect(atlasPaint);
+    final dhakaDistrict = BdGeo.districtByName('Dhaka')!;
+    await tester.tapAt(atlasRect.topLeft +
+        Offset(dhakaDistrict.labelPoint.dx * atlasRect.width,
+            dhakaDistrict.labelPoint.dy * atlasRect.height));
+    await settle(tester);
+    expect(find.text('District'), findsWidgets,
+        reason: 'info panel should show the district level chip');
+  });
+
+  testWidgets('map-only screenshots', (tester) async {
+    // A lean screen with just a map and no app bar, so the map fills the
+    // phone. Uses the example palette so the shots match the demo app.
+    Widget lean(Widget map) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(colorSchemeSeed: const Color(0xFF006A4E)),
+          home: Scaffold(
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 24, 12, 12),
+                child: map,
+              ),
+            ),
+          ),
+        );
+
+    // Country level without the breadcrumb, which would only read
+    // "Bangladesh" here.
+    await tester.pumpWidget(
+        lean(const BdMap(palette: app.kMapPalette, showBreadcrumb: false)));
+    await settle(tester);
+    await binding.convertFlutterSurfaceToImage();
+    await settle(tester);
+    await binding.takeScreenshot('01-drilldown-divisions');
+
+    // Drill sequence with the breadcrumb visible.
+    await tester.pumpWidget(lean(const BdMap(palette: app.kMapPalette)));
+    await settle(tester);
+
+    final dhaka = BdGeo.divisionByName('Dhaka')!;
+    await tapRegion(tester, dhaka);
+    await binding.takeScreenshot('02-drilldown-districts');
+
+    final gazipur = BdGeo.districtByName('Gazipur')!;
+    await tapRegion(tester, gazipur, zoomedInto: dhaka);
+    await binding.takeScreenshot('03-drilldown-upazilas');
+
+    final upazilas = BdGeo.childrenOf(gazipur);
+    final kaliakair = upazilas.firstWhere((u) => u.name.contains('Kaliakair'),
+        orElse: () => upazilas.first);
+    await tapRegion(tester, kaliakair, zoomedInto: gazipur);
+    await binding.takeScreenshot('04-drilldown-unions');
+
+    // --- One shot per map widget in the package default look, for the
+    // "Show a map" table.
+    await tester.pumpWidget(lean(
+        const BdMap(key: ValueKey('default-look'), showBreadcrumb: false)));
+    await settle(tester);
+    await binding.takeScreenshot('map-drilldown');
+
+    await tester.pumpWidget(lean(const BdCountryMap(BdArea.district)));
+    await settle(tester);
+    await binding.takeScreenshot('map-country');
+
+    await tester.pumpWidget(lean(const Center(child: Bangladesh())));
+    await settle(tester);
+    await binding.takeScreenshot('map-classic');
   });
 
   testWidgets('back button navigates one level up', (tester) async {

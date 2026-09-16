@@ -29,6 +29,24 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+/// Region colors shared by every map in this app (and the screenshot test). Regions cycle through
+/// the list, so any set of distinct colors works.
+const kMapPalette = <Color>[
+  Color(0xFF3F51B5), // indigo
+  Color(0xFF009688), // teal
+  Color(0xFFFF9800), // orange
+  Color(0xFFE91E63), // pink
+  Color(0xFF4CAF50), // green
+  Color(0xFF9C27B0), // purple
+  Color(0xFF00BCD4), // cyan
+  Color(0xFFFFC107), // amber
+  Color(0xFFF44336), // red
+  Color(0xFF2196F3), // blue
+  Color(0xFF8BC34A), // light green
+  Color(0xFFFF5722), // deep orange
+  Color(0xFF673AB7), // deep purple
+];
+
 /// Where the map data comes from. Both sources feed the maps through the
 /// same one line: `BdMapData<num>.fromJsonString(body)`.
 enum DataSource { jsonFile, apiList }
@@ -86,6 +104,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final pages = [
       BdMap(
+        palette: kMapPalette,
         useBanglaNames: _useBangla,
         data: _data,
         showDataList: _data != null,
@@ -174,6 +193,7 @@ class _AtlasPageState extends State<_AtlasPage> {
         Expanded(
           child: BdCountryMap(
             _level,
+            palette: kMapPalette,
             useBanglaNames: widget.useBangla,
             data: widget.data,
             showDataList: widget.data != null,
