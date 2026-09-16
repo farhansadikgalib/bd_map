@@ -1,0 +1,36 @@
+name: example
+description: Example app for the bd_map package.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  bd_map:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  integration_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/bd_data_full_country.json
+    - assets/bd_data_all_levels.json
+    - assets/bd_data_divisions.json
+    - assets/bd_data_districts.json
+    - assets/bd_data_thanas.json
+    - assets/bd_data_unions.json
