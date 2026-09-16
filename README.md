@@ -66,10 +66,10 @@ BdMap(
 
 | Field | Example | Meaning |
 | --- | --- | --- |
-| `name` | `'Kaliakair'` | English name |
-| `bnName` | `'কালিয়াকৈর'` | Bangla name |
+| `name` | `'Sreepur'` | English name |
+| `bnName` | `'শ্রীপুর'` | Bangla name |
 | `level` | `BdArea.upazila` | division, district, upazila or union |
-| `id` | `'dhaka.gazipur.kaliakair'` | Stable key: lowercase path from the division down |
+| `id` | `'dhaka.gazipur.sreepur'` | Stable key: lowercase path from the division down |
 | `parentId` | `'dhaka.gazipur'` | Id of the region one level up |
 
 You never type ids by hand. Read them from a tapped region, look them up with `BdGeo`, or key your data by plain names in JSON as shown next.
@@ -85,7 +85,7 @@ Write a JSON file nested the way the country is organized. Keys are region names
   "data": {
     "Dhaka": {
       "value": 44.2,
-      "Gazipur": { "value": 3.4, "Kaliakair": 0.4, "Sreepur": 1.3 },
+      "Gazipur": { "value": 3.4, "Sreepur": 0.4, "Kapasia": 1.3 },
       "Tangail": 4.0
     },
     "Sylhet": 11.0
@@ -124,7 +124,7 @@ Building the dataset in Dart works too, keyed by region id:
 
 ```dart
 final population = BdMapData<num>(
-  {'dhaka': 44.2, 'dhaka.gazipur': 3.4, 'dhaka.gazipur.kaliakair': 0.4},
+  {'dhaka': 44.2, 'dhaka.gazipur': 3.4, 'dhaka.gazipur.sreepur': 0.4},
   title: 'Population',
   format: (v) => '${v}M',
 );
@@ -150,7 +150,7 @@ Names are resolved among the parent's children only, so repeated names such as `
 Flat per-level sections are accepted as well, with optional `Parent/Child` keys to disambiguate:
 
 ```json
-{ "districts": { "Gazipur": 3.4 }, "upazilas": { "Gazipur/Kaliakair": 0.4 } }
+{ "districts": { "Gazipur": 3.4 }, "upazilas": { "Gazipur/Sreepur": 0.4 } }
 ```
 
 For API lists, the region comes from `division`, `district`, `thana` or `upazila`, and `union`, where the deepest field is the target and shallower ones qualify it, or from a generic `name`, `region` or `id`. The value comes from `value`, `count`, `total`, `amount`, `population` or `percentage`, otherwise the first numeric field. Name your own fields with `regionKey:` and `valueKey:` on `BdMapData.fromList`.
@@ -178,7 +178,7 @@ final districts = BdGeo.childrenOf(dhaka);          // 13 districts
 final gazipur = BdGeo.districtByName('Gazipur')!;   // gazipur.id == 'dhaka.gazipur'
 final upazilas = BdGeo.childrenOf(gazipur);         // its upazilas
 final unions = BdGeo.unionsOf(upazilas.first.id);   // its unions
-final region = BdGeo.byId('dhaka.gazipur.kaliakair');
+final region = BdGeo.byId('dhaka.gazipur.sreepur');
 ```
 
 ### `BdMap` options

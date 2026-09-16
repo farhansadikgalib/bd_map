@@ -17,7 +17,7 @@ import 'bd_region.dart';
 /// Works at every administrative level — the same object can carry values
 /// for divisions, districts, upazilas/thanas, and unions at once, because
 /// all region ids share one namespace (`'dhaka'`, `'dhaka.gazipur'`,
-/// `'dhaka.gazipur.kaliakair'`, ...).
+/// `'dhaka.gazipur.sreepur'`, ...).
 ///
 /// Numeric values are automatically rendered as a choropleth: each region
 /// is filled with a color interpolated between [minColor] and [maxColor]
@@ -66,9 +66,9 @@ class BdMapData<T> {
   ///       "value": 44.2,
   ///       "Gazipur": {
   ///         "value": 3.4,
-  ///         "Kaliakair": {
+  ///         "Sreepur": {
   ///           "value": 0.4,
-  ///           "Atabaha": 0.05
+  ///           "Barmi": 0.05
   ///         }
   ///       }
   ///     }
@@ -86,8 +86,8 @@ class BdMapData<T> {
   /// {
   ///   "divisions": { "Dhaka": 44.2, "চট্টগ্রাম": 33.2 },
   ///   "districts": { "Gazipur": 3.4 },
-  ///   "upazilas":  { "Gazipur/Kaliakair": 0.4 },
-  ///   "unions":    { "Gazipur/Kaliakair/Atabaha": 0.05 }
+  ///   "upazilas":  { "Gazipur/Sreepur": 0.4 },
+  ///   "unions":    { "Gazipur/Sreepur/Barmi": 0.05 }
   /// }
   /// ```
   ///

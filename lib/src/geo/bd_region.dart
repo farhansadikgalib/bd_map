@@ -45,7 +45,7 @@ class BdRegion {
 
   /// Stable unique identifier: the lowercase English path from the
   /// division down, dot-separated — `'dhaka'`, `'dhaka.gazipur'`,
-  /// `'dhaka.gazipur.kaliakair'`, `'dhaka.gazipur.kaliakair.atabaha'`.
+  /// `'dhaka.gazipur.sreepur'`, `'dhaka.gazipur.sreepur.barmi'`.
   final String id;
 
   /// English name, e.g. `'Dhaka'`.
