@@ -1,18 +1,14 @@
 name: bd_map
 
 screenshots:
-  - description: Interactive drill-down map showing all 8 divisions of Bangladesh.
+  - description: Drill-down map at country level showing all 8 divisions.
     path: screenshots/01-drilldown-divisions.png
-  - description: Districts of Dhaka division after drilling down.
+  - description: Districts of Dhaka division after one tap, with breadcrumb navigation.
     path: screenshots/02-drilldown-districts.png
-  - description: Upazilas and thanas of a district with breadcrumb navigation.
+  - description: Upazilas of Gazipur district.
     path: screenshots/03-drilldown-upazilas.png
-  - description: Info panel showing custom data for a selected region.
-    path: screenshots/04-info-panel.png
-  - description: Map labels and navigation in Bangla.
-    path: screenshots/05-bangla-mode.png
-  - description: The classic customizable division-level map widget.
-    path: screenshots/06-classic-map.png
+  - description: Unions of Kaliakair upazila, the deepest level.
+    path: screenshots/04-drilldown-unions.png
 
 description: Interactive drill-down maps of Bangladesh for Flutter, from division to union, with a geography API and data coloring from JSON or an API. Pure Dart, no assets or dependencies.
 
@@ -20,7 +16,7 @@ homepage: https://v2.farhansadikgalib.com
 repository: https://github.com/farhansadikgalib/bd_map
 issue_tracker: https://github.com/farhansadikgalib/bd_map/issues
 
-version: 1.0.0
+version: 1.1.0
 
 topics:
   - map

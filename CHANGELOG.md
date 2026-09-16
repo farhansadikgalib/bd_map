@@ -1,3 +1,10 @@
+## 1.1.0
+
+- Fresh screenshots: the drill-down sequence from division to union and one shot per map widget, captured on an iPhone and framed.
+- New banner and app icon in a blue palette.
+- README: a map-types row under "Show a map", the Features table moved below it, and Sreepur as the example upazila throughout the docs.
+- Example app: a shared colorful palette for both maps, a lean screenshot capture flow in the integration test, and iOS deployment target 15.0 so it builds with current Xcode.
+
 ## 1.0.0
 
 Initial release.
